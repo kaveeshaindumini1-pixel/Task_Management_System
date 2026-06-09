@@ -22,18 +22,5 @@ router.get("/profile", verifyToken, (req, res) => {
   });
 });
 
-const allowRoles = require("../middleware/roleMiddleware");
-
-// ADMIN ONLY ROUTE
-router.get(
-  "/admin",
-  verifyToken,
-  allowRoles("ADMIN"),
-  (req, res) => {
-    res.json({
-      message: "Admin Access Granted",
-    });
-  }
-);
 
 module.exports = router;

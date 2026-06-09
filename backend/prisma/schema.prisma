@@ -13,6 +13,18 @@ enum Role {
   COLLABORATOR
 }
 
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   name      String
@@ -20,6 +32,23 @@ model User {
   password  String
   role      Role     @default(COLLABORATOR)
 
+  tasks     Task[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Task {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String?
+  status      TaskStatus   @default(PENDING)
+  priority    TaskPriority @default(MEDIUM)
+  dueDate     DateTime?
+
+  userId      Int
+  user        User         @relation(fields: [userId], references: [id])
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
